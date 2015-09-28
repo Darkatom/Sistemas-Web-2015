@@ -133,19 +133,19 @@
             <!-- style="width:100%; height:100%"-->    
 					<form id='registro' name='registro' onSubmit='return comprobarFormulario();' action="upload.php" method="post" enctype="multipart/form-data" > 
 						Nombre y apellidos (*)<br/>
-						<input type="text" name="nombre" onBlur = "checkNombre()"> 
+						<input type="text" name="nombre" onBlur = "checkNombre()" required> 
 						<br/>
 						
 						Dirección de correo (*)<br/>
-						<input type="text" name="email" onBlur = "checkEmail()">
+						<input type="text" name="email" onBlur = "checkEmail()" required>
 						<br/>
 						
 						Password (*)<br/>
-						<input type="password" name="pass" onBlur = "checkPass()">
+						<input type="password" name="pass" onBlur = "checkPass()" required>
 						<br/>
 						
 						Número de teléfono (*)<br/>
-						<input type="tel" name="telefono" onBlur = "checkTLF()">
+						<input type="tel" name="telefono" onBlur = "checkTLF()" required>
 						<br/>
 						
 						Especialidad (*)<br/>

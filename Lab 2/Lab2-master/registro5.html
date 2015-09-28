@@ -13,7 +13,7 @@
 		   media='only screen and (max-width: 480px)'
 		   href='estilos/smartphone.css' />
            
-           <!-- Aquí voy a meter el script -->
+           <!-- Aquí metemos los scripts -->
            <script> 
 				function comprobarFormulario(){
 					
@@ -33,6 +33,8 @@
 						alert("Debe introducir un nombre y dos apellidos correctos.\n");
 						return false;
 					}
+					//cambiarValor(20)
+					document.getElementById("p").value = 20;
 					return true;
 				}
 				
@@ -43,6 +45,7 @@
 						alert("El e-mail no es válido.\n");
 						return false;
 					}
+					document.getElementById("p").value = 40;
 					return true;
 				}
 				
@@ -53,6 +56,7 @@
 						alert("La contraseña debe contener al menos seis caracteres.\n");
 						return false;
 					}
+					document.getElementById("p").value = 60;
 					return true;		
 				}
 				
@@ -63,6 +67,7 @@
 						alert("Introduzca un número de teléfono correcto.\n");
 						return false;
 					}
+					document.getElementById("p").value = 80;
 					return true;
 				}
 				
@@ -75,6 +80,7 @@
 						alert("Introduzca una especialidad correcta.\n");
 						return false;
 					}
+					document.getElementById("p").value = 100;
 					return true;
 				}
 				
@@ -129,27 +135,31 @@
 				</div>
 			</header> <!--Fin encabezado-->
     
+    
+    		<progress id='p' value="0" max='100'><span>0</span>%</progress> <!--Barra de progreso-->
+    
+    
 			<section class="main" id="s1" style="width:100%; height:100%">
             <!-- style="width:100%; height:100%"-->    
 					<form id='registro' name='registro' onSubmit='return comprobarFormulario();' action="upload.php" method="post" enctype="multipart/form-data" > 
 						Nombre y apellidos (*)<br/>
-						<input type="text" name="nombre" onBlur = "checkNombre()"> 
+						<input type="text" name="nombre" onBlur = "checkNombre()" required="required"> 
 						<br/>
 						
 						Dirección de correo (*)<br/>
-						<input type="text" name="email" onBlur = "checkEmail()">
+						<input type="email" name="email" required="required" onBlur = "checkEmail()">
 						<br/>
 						
 						Password (*)<br/>
-						<input type="password" name="pass" onBlur = "checkPass()">
+						<input type="password" name="pass" onBlur = "checkPass()" required="required">
 						<br/>
 						
 						Número de teléfono (*)<br/>
-						<input type="tel" name="telefono" onBlur = "checkTLF()">
+						<input type="tel" name="telefono" pattern="[0-9]{9}" required="required">
 						<br/>
 						
 						Especialidad (*)<br/>
-                        <select name="especialidad" onBlur="checkEspecialidad()" onchange="cambiarSalida(this);">
+                        <select name="especialidad" required="required" onBlur="checkEspecialidad()" onchange="cambiarSalida(this);">
                             <option value="Computacion" selected>Computación</option>
                             <option value="Hardware">Ingeniería de Computadores</option>
                             <option value="Software">Ingeniería del Software</option>
@@ -175,6 +185,7 @@
                         <input type="submit" value="Enviar formulario" name="submit" >
 
 					</form>
+			</section>
 
 						
 			<footer>
