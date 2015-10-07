@@ -81,7 +81,7 @@
                                     <td>".$row["Apellido2"]."</td>
                                     <td>".$row["Especialidad"]."</td>
                                     <td>".$row["Intereses"]."</td>
-                                    <td><img src=".$row['Foto']." width='"."20%"."' height='"."auto"."'></td>
+                                    <td><img src=".$row["Foto"]." width='"."20%"."' height='"."auto"."'></td>
                                 </tr>";
                             }
 							//Los nombres entrecomillados de arriba tienen que ser iguales a los nombres de los campos de la BD que hemos creado.

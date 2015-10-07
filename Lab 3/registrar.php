@@ -14,6 +14,13 @@
                 <div>-->
                     <?php
 					
+					/////// INFO SERVIDOR ///////
+					$servidor 	= "mysql.hostinger.es";
+					$usuario 	= "u837753965_root"; 	//Nombre de usuario para acceder a la BD.
+					$password 	= "soyelroot"; 			//Password de la BD en Hostinger
+					$nombre_bd 	= "u837753965_quiz";	//Nuestra base de datos se llama "quiz".
+					/////////////////////////////
+					
                     $target_dir = "uploads/";
                     $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
                     $uploadOk = 1;
@@ -64,10 +71,6 @@
 					
 					//////////
 					
-					$servidor 	= "mysql.hostinger.es";
-					$usuario 	= "u837753965_root"; 	//Nombre de usuario para acceder a la BD.
-					$password 	= "soyelroot"; 			//Password de la BD en Hostinger
-					$nombre_bd 	= "u837753965_quiz";	//Nuestra base de datos se llama "quiz".
 					
 					// Crear la conexion
 					$conexion = new mysqli($servidor, $usuario, $password, $nombre_bd);
@@ -78,7 +81,7 @@
 					}
 					
 					$sql = "INSERT INTO u837753965_quiz.usuario (Email, Nombre, Apellido1, Apellido2, Password, Teléfono, Especialidad, Intereses, Foto)
-					VALUES ('{$_POST['email']}','{$_POST['nombre']}', '{$_POST['apellido1']}', '{$_POST['apellido2']}', '{$_POST['pass']}', '{$_POST['telefono']}', '{$_POST['especialidad']}', '{$_POST['intereses']}', '{$_POST['foto']}')";
+					VALUES ('{$_POST['email']}','{$_POST['nombre']}', '{$_POST['apellido1']}', '{$_POST['apellido2']}', '{$_POST['pass']}', '{$_POST['telefono']}', '{$_POST['especialidad']}', '{$_POST['intereses']}', '{$target_file}')";
 
 
 					//INSERT INTO `u837753965_quiz`.`usuario` (`Email`, `Nombre`, `Apellido1`, `Apellido2`, `Password`, `Teléfono`, `Especialidad`, `Intereses`, `Foto`) VALUES ('nuevouser001 2ikasle.ehu.es', 'Nuevo', 'Test', 'Prubas', '123456', '123456789', 'Software', NULL, 
