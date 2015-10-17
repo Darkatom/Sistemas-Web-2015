@@ -1,194 +1,233 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Registro</title>
-        <link rel='stylesheet' type='text/css' href='estilos/style.css' />
-        <link rel='stylesheet' 
-		   type='text/css' 
-		   media='only screen and (min-width: 530px) and (min-device-width: 481px)'
-		   href='estilos/wide.css' />
-		<link rel='stylesheet' 
-		   type='text/css' 
-		   media='only screen and (max-width: 480px)'
-		   href='estilos/smartphone.css' />
-           
-           <!-- Aquí voy a meter el script -->
-           <script> 
-				function comprobarFormulario(){
-					
-					/*if ( !checkNombre() ||  !checkApellido1() ||  !checkApellido2() ||  !checkEmail() || !checkPass() || !checkTLF() || !checkEspecialidad() ) {
-						alert ("Rellene correctamente los campos obligatorios.");
-						return false;
-					}*/
-					return true;
-				}	
-				
-				function checkNombre() {
-					var nombre = document.getElementById("registro").nombre.value; 
-					
-					if (! /^[a-zA-Z]+[ |a-zA-Z]*$/.test(nombre) )	{
-						alert("Debe introducir un nombre correcto.\n");
-						return false;
-					}
-					return true;
-				}
-				
-				function checkApellido1() {
-					var apellido = document.getElementById("registro").apellido1.value; 
-					
-					if (! /^[a-zA-Z]+[ |a-zA-Z]*$/.test(apellido) )	{
-						alert("Debe introducir un primer apellido correcto.\n");
-						return false;
-					}
-					return true;
-				}
-				
-				function checkApellido2() {
-					var apellido = document.getElementById("registro").apellido2.value; 
-					
-					if (! /^[a-zA-Z]+[ |a-zA-Z]*$/.test(apellido) )	{
-						alert("Debe introducir un segundo apellido correcto.\n");
-						return false;
-					}
-					return true;
-				}				
-				
-				function checkEmail(){
-					var email = document.getElementById("registro").email.value; 
-					
-					if (! /^[a-zA-Z]+\d{3}@ikasle\.ehu\.(es|eus)$/.test(email) ) {	
-						alert("El e-mail no es válido.\n");
-						return false;
-					}
-					return true;
-				}
-				
-				function checkPass() {
-					var pass = document.getElementById("registro").pass.value;
-					
-					if (pass.length < 6) {
-						alert("La contraseña debe contener al menos seis caracteres.\n");
-						return false;
-					}
-					return true;		
-				}
-				
-				function checkTLF() {
-					var telf = document.getElementById("registro").telefono.value; 
-					
-					if (! /^\d{9}$/.test(telf) ) {
-						alert("Introduzca un número de teléfono correcto.\n");
-						return false;
-					}
-					return true;
-				}
-				
-				function checkEspecialidad() {
-					var esp = document.getElementById("registro").especialidad.value; 
-					
-					//alert(esp);
-					
-					if (esp.length < 5) {
-						alert("Introduzca una especialidad correcta.\n");
-						return false;
-					}
-					return true;
-				}
-				
-				function vervalores(){  
-					var sAux=""; 
-					var frm = document.getElementById("registro"); 
-					for (i=1;i<frm.elements.length;i++) 
-					{ 
-								sAux += "NOMBRE: " + frm.elements[i].name + " "; 
-								sAux += "VALOR: " + frm.elements[i].value + "\n"; 
-					} 
-					alert(sAux); 
-				} 
-				
-				var Objs;
-			
-				function cambiarSalida(obj){
-					if(obj.value=="Otra"){
-						
-						text = document.createElement('INPUT');
-						text.type = 'text';
-						text.value = obj.options[obj.selectedIndex].text;
-						text.name = 'especialidad';
-						text.onBlur = 'checkEspecialidad()';
-						
-						button = document.createElement('INPUT');
-						button.type = 'button';
-						button.value = 'Atrás';
-						button.objs = [obj,text,button];
-						button.onclick = function(){ Replace(this.objs); }
-						
-						obj.parentNode.insertBefore(text,obj);
-						obj.parentNode.insertBefore(button,obj);
-						obj.parentNode.removeChild(obj);									
-					}
-				}
-			
-				function Replace(obj){
-					obj[2].parentNode.insertBefore(obj[0],obj[2]);
-					obj[0].parentNode.removeChild(obj[1]);
-					obj[0].parentNode.removeChild(obj[2]);
-				}
-				
-			</script>  
-	</head>
 
-	<body>
-		<div id='page-wrap'>
-			<header class='main' id='h1'> <!--Encabezado-->
-				<div align="center">
-					<h2>Registro</h2>
-				</div>
-			</header> <!--Fin encabezado-->
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Preguntas</title>
+        <link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'/>
+        <link href="estilos/personalizado.css" rel="stylesheet" type="text/css" />
+        <link rel='stylesheet' 
+       	type='text/css' 
+       	media='only screen and (max-width: 480px)'
+       	href='estilos/smartphone.css' />
+        
+		<script> 
+			function comprobarFormulario(){
+				
+				/*if ( !checkNombre() ||  !checkApellido1() ||  !checkApellido2() ||  !checkEmail() || !checkPass() || !checkTLF() || !checkEspecialidad() ) {
+					alert ("Rellene correctamente los campos obligatorios.");
+					return false;
+				}*/
+				return true;
+			}	
+			
+			function checkNombre() {
+				var nombre = document.getElementById("registro").nombre.value; 
+				
+				if (! /^[a-zA-Z]+[ |a-zA-Z]*$/.test(nombre) )	{
+					alert("Debe introducir un nombre correcto.\n");
+					return false;
+				}
+				return true;
+			}
+			
+			function checkApellido1() {
+				var apellido = document.getElementById("registro").apellido1.value; 
+				
+				if (! /^[a-zA-Z]+[ |a-zA-Z]*$/.test(apellido) )	{
+					alert("Debe introducir un primer apellido correcto.\n");
+					return false;
+				}
+				return true;
+			}
+			
+			function checkApellido2() {
+				var apellido = document.getElementById("registro").apellido2.value; 
+				
+				if (! /^[a-zA-Z]+[ |a-zA-Z]*$/.test(apellido) )	{
+					alert("Debe introducir un segundo apellido correcto.\n");
+					return false;
+				}
+				return true;
+			}				
+			
+			function checkEmail(){
+				var email = document.getElementById("registro").email.value; 
+				
+				if (! /^[a-zA-Z]+\d{3}@ikasle\.ehu\.(es|eus)$/.test(email) ) {	
+					alert("El e-mail no es válido.\n");
+					return false;
+				}
+				return true;
+			}
+			
+			function checkPass() {
+				var pass = document.getElementById("registro").pass.value;
+				
+				if (pass.length < 6) {
+					alert("La contraseña debe contener al menos seis caracteres.\n");
+					return false;
+				}
+				return true;		
+			}
+			
+			function checkTLF() {
+				var telf = document.getElementById("registro").telefono.value; 
+				
+				if (! /^\d{9}$/.test(telf) ) {
+					alert("Introduzca un número de teléfono correcto.\n");
+					return false;
+				}
+				return true;
+			}
+			
+			function checkEspecialidad() {
+				var esp = document.getElementById("registro").especialidad.value; 
+				
+				//alert(esp);
+				
+				if (esp.length < 5) {
+					alert("Introduzca una especialidad correcta.\n");
+					return false;
+				}
+				return true;
+			}
+			
+			function vervalores(){  
+				var sAux=""; 
+				var frm = document.getElementById("registro"); 
+				for (i=1;i<frm.elements.length;i++) 
+				{ 
+							sAux += "NOMBRE: " + frm.elements[i].name + " "; 
+							sAux += "VALOR: " + frm.elements[i].value + "\n"; 
+				} 
+				alert(sAux); 
+			} 
+			
+			var Objs;
+		
+			function cambiarSalida(obj){
+				if(obj.value=="Otra"){
+					
+					text = document.createElement('INPUT');
+					text.type = 'text';
+					text.value = obj.options[obj.selectedIndex].text;
+					text.name = 'especialidad';
+					text.onBlur = 'checkEspecialidad()';
+					
+					button = document.createElement('INPUT');
+					button.type = 'button';
+					button.value = 'Atrás';
+					button.objs = [obj,text,button];
+					button.onclick = function(){ Replace(this.objs); }
+					
+					obj.parentNode.insertBefore(text,obj);
+					obj.parentNode.insertBefore(button,obj);
+					obj.parentNode.removeChild(obj);									
+				}
+			}
+		
+			function Replace(obj){
+				obj[2].parentNode.insertBefore(obj[0],obj[2]);
+				obj[0].parentNode.removeChild(obj[1]);
+				obj[0].parentNode.removeChild(obj[2]);
+			}
+				
+		</script>  
+    </head>
     
-			<section class="main" id="s1" style="width:100%; height:100%">
-            <!-- style="width:100%; height:100%"-->    
-					<form id='registro' name='registro' onSubmit='return comprobarFormulario();' action="registrar.php" method="post" enctype="multipart/form-data" > 
-						Nombre (*)<br/>
+    
+    <body>
+        <div class="wrapper">
+        	<div class="logo-menu-container">
+            	<div class="logo">Quiz: el juego de las preguntas</div>
+          	</div>
+          	<div class="page">
+            	<div class="left-column">
+              		<div class="dark-panel">
+                		<div class="dark-panel-center">
+                  			<ul>
+                    			<li>
+                      				<h1>Login</h1>
+                    			</li>
+                    			<li class="username">
+                      				<input name="userid" type="text" class="login-input" />
+                    			</li>
+                    			<li class="password">
+                      				<input name="passcode" type="password" class="login-input" />
+                    			</li>
+                    			<li class="button"><a href="#">Entrar</a></li>
+                  			</ul>
+                		</div>
+                    	<p>¿Aún no tienes cuenta? <a href="registro.html">Registrarse</a>.</p>
+                		<div class="dark-panel-bottom"></div>
+              		</div>
+                    <div class="dark-panel">
+                    <div class="dark-panel-center">
+                        <ul>
+                            <li>
+                                <h1>Menú</h1>
+                            </li>
+                            <li class="date"><a href="layout.html">Inicio</a></li>
+                            <li class="date"><a href="quizes">Preguntas</a></li>
+                            <li class="date"><a href="creditos.html">Créditos</a></li>
+                        </ul>
+                    </div>
+                	<div class="dark-panel-bottom"></div>
+              	</div>
+            </div>
+            
+            <div class="right-column">
+				<div class="right-column-content">
+                	<div class="right-column-content-heading">
+                  		<h1>&nbsp;</h1>
+                        <h1>Registro</h1>
+                        <h2>&nbsp; </h2>
+                        <h2>Complete el siguiente formulario. Los campos marcados con (*) son</h2>
+                        <h2>&nbsp;</h2>
+                        <h2> obligatorios y no se pueden dejar en blanco.</h2>
+                	</div>
+                	<div class="right-column-content-content">
+                  		<form id='registro' name='registro' onSubmit='return comprobarFormulario();' action="registrar.php" method="post" enctype="multipart/form-data" > 
+						Nombre (*)<br/><br/>
 						<input type="text" name="nombre" onBlur = "checkNombre()"> 
-						<br/>
+						<br/><br/>
                         
-                        Apellido 1 (*)<br/>
+                        Apellido 1 (*)<br/><br/>
 						<input type="text" name="apellido1" onBlur = "checkApellido1()"> 
-						<br/>
+						<br/><br/>
                         
-                        Apellido 2 (*)<br/>
+                        Apellido 2 (*)<br/><br/>
 						<input type="text" name="apellido2" onBlur = "checkApellido1()"> 
-						<br/>
+						<br/><br/>
 						
-						Dirección de correo (*)<br/>
+						Dirección de correo (*)<br/><br/>
 						<input type="text" name="email" onBlur = "checkEmail()">
-						<br/>
+						<br/><br/>
 						
-						Password (*)<br/>
+						Password (*)<br/><br/>
 						<input type="password" name="pass" onBlur = "checkPass()">
-						<br/>
+						<br/><br/>
 						
-						Número de teléfono (*)<br/>
+						Número de teléfono (*)<br/><br/>
 						<input type="tel" name="telefono" onBlur = "checkTLF()">
-						<br/>
+						<br/><br/>
 						
-						Especialidad (*)<br/>
+						Especialidad (*)<br/><br/>
                         <select name="especialidad" onBlur="checkEspecialidad()" onchange="cambiarSalida(this);">
                             <option value="Computacion" selected>Computación</option>
                             <option value="Hardware">Ingeniería de Computadores</option>
                             <option value="Software">Ingeniería del Software</option>
                             <option value="Otra">Otra</option>
-                        </select><br/>
+                        </select><br/><br/>
 						
-						Tecnologías y herramientas en las que está interesado:<br>
-						<input type="text" name="intereses"><br/><br/>
+						Tecnologías y herramientas en las que está interesado:<br><br/>
+						<input type="text" name="intereses"><br/><br/><br/>
                        
                         <!-- Subida del archivo -->
                         Seleccione una imagen para subir:
                         <input type="file" name="fileToUpload" id="fileToUpload" onchange="loadFile(event)"></br>
-                        </br>
+                        </br><br/>
                         <p>Vista previa de la imagen:</p>
                         <img id="output" width="150px" height="auto"/></br>
                             <script>
@@ -200,12 +239,14 @@
                         
                         <input type="submit" value="Enviar formulario" name="submit" >
 
-					</form>
+					</form>                	</div>
+              	</div>
+			</div>
+          </div>
+        </div>
+        <div class="footer-wrapper">
+            <p align="center" class="date"><a href="layout.html">Volver</a><a href="https://github.com"></a></p>
+        </div>
+    </body>
 
-						
-			<footer>
-				<a href='layout.html'>Volver</a>
-			</footer>
-		</div>
-	</body>
 </html>

@@ -38,10 +38,11 @@
 				<div align="center">
             		<!--Aqui metemos el PHP para que se haga la conexion con la BD-->
                     <?php
-                        $servidor 	= "mysql.hostinger.es";
-                        $usuario 	= "u837753965_root"; 	//Nombre de usuario para acceder a la BD.
-                        $password 	= "soyelroot"; 			//Password de la BD en Hostinger
-                        $nombre_bd 	= "u837753965_quiz";	//Nuestra base de datos se llama "quiz".
+						/////// INFO SERVIDOR ///////
+						$servidor 	= "mysql.hostinger.es";
+						$usuario 	= "u432294351_root";     // José: u837753965_root"; 	//Nombre de usuario para acceder a la BD.
+						$password 	= "soyelroot"; 										//Password de la BD en Hostinger
+						$nombre_bd 	= "u432294351_quiz";     // José: u837753965_quiz";	//Nuestra base de datos se llama "quiz".
                         
                         // Crear la conexion
                         $conexion = new mysqli($servidor, $usuario, $password, $nombre_bd);
