@@ -111,11 +111,14 @@
 						}
 						
 						$conexion->close();
+						header('Location: registroAceptado.html');
 	
 					} else {
-						echo "Error: El formulario no ha sido rellenado correctamente.";
+						header('Location: registroDenegado.html');
+						//echo "Error: El formulario no ha sido rellenado correctamente.";
 					}
 					/////////////
+	
 	
                     ?> 
                     <!--<p><a href="./layout.html" class="links">Volver atrás.</a></p>
