@@ -146,20 +146,20 @@
             	<div class="left-column">
               		<div class="dark-panel">
                 		<div class="dark-panel-center">
-                  			<ul>
-                    			<li>
-                      				<h1>Login</h1>
-                    			</li>
-                    			<li class="username">
-                      				<input name="userid" type="text" class="login-input" />
-                    			</li>
-                    			<li class="password">
-                      				<input name="passcode" type="password" class="login-input" />
-                    			</li>
-                    			<li class="button"><a href="#">Entrar</a></li>
-                  			</ul>
+                  			<form id = 'login' name = 'login' action = 'login.php' method = 'post'>
+							    <h1>Login</h1>
+								<ul>
+									<li class="username">
+										<input name = "email" type = "text" class = "login-input" />
+									</li>
+									<li class="password">
+										<input name = "password" type = "password" class = "login-input" />
+									</li>
+								</ul>
+                    			<input type = "submit" value = "Entrar" name = "Entrar"/>
+                  			</form>
                 		</div>
-                    	<p>¿Aún no tienes cuenta? <a href="registro.html" class="date">Registrarse</a>.</p>
+                    	<p>¿Aún no tienes cuenta? <a href="registro.html" class="date">Regístrate</a>.</p>
                 		<div class="dark-panel-bottom"></div>
               		</div>
                     <div class="dark-panel">

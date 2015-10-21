@@ -16,15 +16,20 @@
 					
 					/////// INFO SERVIDOR ///////
 					$servidor 	= "mysql.hostinger.es";
-					$usuario 	= "u432294351_root";     // José: u837753965_root"; 	//Nombre de usuario para acceder a la BD.
-					$password 	= "soyelroot"; 										//Password de la BD en Hostinger
-					$nombre_bd 	= "u432294351_quiz";     // José: u837753965_quiz";	//Nuestra base de datos se llama "quiz".
+					$usuario 	= "u837753965_root";	//Nombre de usuario para acceder a la BD (UserID_root).
+					$password 	= "soyelroot";			//Password de la BD en Hostinger
+					$nombre_bd 	= "u837753965_quiz";	//Nuestra base de datos se llama "quiz" (UserID_quiz).
 					/////////////////////////////
+					
+					/*////////// UserID //////////
+					olatz	=	u837753965;		//
+					jose	=	u837753965;		//
+					////////////////////////////*/
+
 					
 					$control = false;
 					
 					////////// VALIDAR FORMULARIO //////////
-					
 					if ((preg_match("/^[a-zA-Z]+[ |a-zA-Z]*$/", $_POST['nombre'])) and 
 					    (preg_match("/^[a-zA-Z]+[ |a-zA-Z]*$/", $_POST['apellido1'])) and
 						(preg_match("/^[a-zA-Z]+[ |a-zA-Z]*$/", $_POST['apellido2'])) and
@@ -38,7 +43,8 @@
 						$target_dir = "uploads/";
 							
 						// Comprueba si se ha mandado una imagen
-						if (!empty($_POST[$field])) {
+						//if (!empty($_POST[$field])) {
+						//if (!empty($_POST['fileToUpload'])) {
 							$target_file = $target_dir . $_POST['email'] . basename($_FILES["fileToUpload"]["name"]);
 							$uploadOk = 1;
 							$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
@@ -65,6 +71,8 @@
 							if ($_FILES["fileToUpload"]["size"] > 500000000) {
 								echo "El tamaño del archivo es demasiado grande.";
 								$uploadOk = 0;
+							}elseif ($_FILES["fileToUpload"]["size"] ==0){//Es una comprobacion, si no hay foto, ponemos una por defecto.
+								$target_file = $target_dir . "user.png";
 							}
 							
 							// Restriccion de formatos
@@ -85,9 +93,9 @@
 									echo "Lo siento, hubo un problema con la subida del archivo.";
 								}
 							}
-						} else {
+						/*} else {
 							$target_file = $target_dir . "user.png";
-						}
+						}*/
 						
 						////////// AÑADIR A LA BASE DE DATOS //////////			
 						// Crear la conexion
