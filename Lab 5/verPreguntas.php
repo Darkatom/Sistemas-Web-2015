@@ -34,18 +34,41 @@
           	  <div>
                	<div class="right-column-content-heading">
                   		<h1>&nbsp;</h1>
-                        <h1>Lista de Usuarios</h1>
+                        <h1>Lista de Preguntas</h1>
                         <h2>&nbsp; </h2>
                   <h2>&nbsp;</h2>
                   <div align="center">
             		<!--Aqui metemos el PHP para que se haga la conexion con la BD-->
-                    <?php
+                    <?php				
+					
+						function get_client_ip() {
+							$ipaddress = '';
+							if (getenv('HTTP_CLIENT_IP'))
+								$ipaddress = getenv('HTTP_CLIENT_IP');
+							else if(getenv('HTTP_X_FORWARDED_FOR'))
+								$ipaddress = getenv('HTTP_X_FORWARDED_FOR');
+							else if(getenv('HTTP_X_FORWARDED'))
+								$ipaddress = getenv('HTTP_X_FORWARDED');
+							else if(getenv('HTTP_FORWARDED_FOR'))
+								$ipaddress = getenv('HTTP_FORWARDED_FOR');
+							else if(getenv('HTTP_FORWARDED'))
+							   $ipaddress = getenv('HTTP_FORWARDED');
+							else if(getenv('REMOTE_ADDR'))
+								$ipaddress = getenv('REMOTE_ADDR');
+							else
+								$ipaddress = 'UNKNOWN';
+							return $ipaddress;
+						}
+						
 						/////// INFO SERVIDOR ///////
 						$servidor 	= "mysql.hostinger.es";
 						$usuario 	= "u837753965_root";	//Olatz: u432294351_root; Jose: u837753965_root; Nombre de usuario para acceder a la BD.
 						$password 	= "soyelroot";	//Password de la BD en Hostinger
 						$nombre_bd 	= "u837753965_quiz";	//Olatz: u432294351_quiz; Jose: u837753965_quiz; Nuestra base de datos se llama "quiz".
                         
+						$email = $_POST['email'];
+						$dir_ip = get_client_ip();
+
                         // Crear la conexion
                         $conexion = new mysqli($servidor, $usuario_servidor, $password_servidor, $nombre_bd);
                         
@@ -54,7 +77,7 @@
                             die("La conexion ha fallado: " . $conexion->connect_error);
                         }
                     
-                        $sql = "SELECT * FROM usuario";		//Sentencia, seleccionar todos los campos de la tabla usuario.
+                        $sql = "SELECT * FROM pregunta";		//Sentencia, seleccionar todos los campos de la tabla pregunta.
                         $result = mysqli_query($conexion, $sql);
                         $num_col = $result->num_rows;
                         
@@ -64,13 +87,8 @@
                             echo "
                             <table border=3>
                                 <tr>
-                                    <th>Email</th>												
-                                    <th>Nombre</th>
-                                    <th>Apellido 1</th>
-                                    <th>Apellido 2</th>
-                                    <th>Especialidad</th>
-                                    <th>Intereses</th>
-                                    <th>Foto</th>
+                                    <th>Pregunta</th>
+                                    <th>Complejidad</th>
                                 </tr>
                             "; 
                             
@@ -78,24 +96,30 @@
                             while($row = $result->fetch_assoc()) {
                                 echo "
                                 <tr>
-                                    <td>".$row["Email"]."</td>
-                                    <td>".$row["Nombre"]."</td>
-                                    <td>".$row["Apellido1"]."</td>
-                                    <td>".$row["Apellido2"]."</td>
-                                    <td>".$row["Especialidad"]."</td>
-                                    <td>".$row["Intereses"]."</td>
-                                    <td><img src=".$row["Foto"]." width='"."20%"."' height='"."auto"."'></td>
+                                    <td>".$row["pregunta"]."</td>
+                                    <td>".$row["complejidad"]."</td>
                                 </tr>";
-                            }
-							//Los nombres entrecomillados de arriba tienen que ser iguales a los nombres de los campos de la BD que hemos creado.
-							//Para la foto probar con: <td><img src=".$row["Foto"]." width='"."20%"."' height='"."auto"."'></td>
-							//Antes: <td>".$row["Foto"]."</td>
-
-
+                            }//La complejidad igual puede ser una imagen.
                             echo "</table>";
                         } else {
                             echo "La tabla está vacía. No hay entradas en la base de datos.";
                         }
+						if($email=NULL){
+							$sql_accion = "INSERT INTO ".$nombre_bd.".acciones (id_accion, id_conexion, email, tipo, hora, ip)
+							VALUES (DEFAULT, DEFAULT ,'NULL', '2', DEFAULT, '{$dir_ip}')";
+							//Vamos a suponer tipo=1 para insertar y tipo=2 para ver, ya que en nuestra tabla es un int.
+						}else{
+							$sql_accion = "INSERT INTO ".$nombre_bd.".acciones (id_accion, id_conexion, email, tipo, hora, ip)
+							VALUES (DEFAULT, DEFAULT ,'{$email}', '2', DEFAULT, '{$dir_ip}')";
+							//Vamos a suponer tipo=1 para insertar y tipo=2 para ver, ya que en nuestra tabla es un int.
+						}
+						if ($conexion->query($sql_accion) === TRUE) {
+							echo "La accion realizada se ha agregado a la base de datos correctamente.";
+						} else {
+							echo "Error: " . $sql_accion . "<br>" . $conexion->error;
+						}
+						
+						
                         $conexion->close();
                     ?>
                     <!--Fuente: http://www.w3schools.com/php/php_mysql_select.asp-->

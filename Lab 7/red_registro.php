@@ -24,21 +24,30 @@
 		</style>
 	</head>
 
-    <body>
-        
-    
+    <body>    
     	<div id='page-wrap'>
 			<header class='main' id='h1'> <!--Encabezado-->
 				<div align="center">
-					<h2>Lista de Usuarios</h2>
+					<?php
+					if ($_GET['insert'] == 0) {		
+						echo("<h2>¡Te has registrado correctamente!</h2>");			
+					} else {		
+						echo("<h2>Lo sentimos, no hemos podido registrarte en nuestra base datos</h2>");	
+					}
+					?>
 				</div>
 			</header> <!--Fin encabezado-->      
     
 			<section class="main" id="s1" style="width:100%; height:100%">
 				<div align="center">
-            		<p>Lo sentimos, ha habido un error al intentar registrarte.</p>  <br/>
-					<a href='javascript:window.history.back()'>Pulsa aquí para volver a la página de registro.</a>	<br/>
-					<a href='layout.html'>Pulsa aquí para volver a la página principal.</a>	
+					<?php
+						if ($_GET['insert'] == 0) {		
+							echo("<a href='layout.html'>Pulsa aquí para volver a la página principal.</a>	<br/>");			
+						} else {	
+							echo("<a href='javascript:window.history.back()'>Pulsa aquí para volver a la página de registro.</a>	<br/>");		
+						}
+					?>
+					<a href='verUsuarios.php'>Pulsa aquí para ver quién más se ha registrado con nosotros.</a>
 				</div>
 			</section>
                      

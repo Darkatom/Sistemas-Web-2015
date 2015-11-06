@@ -1,6 +1,6 @@
 <?php
 	include 'credenciales.php';
-
+	
 	////////// VALIDAR FORMULARIO //////////
 	if ((preg_match("/^[a-zA-Z]+[ |a-zA-Z]*$/", $_POST['nombre'])) and 
 		(preg_match("/^[a-zA-Z]+[ |a-zA-Z]*$/", $_POST['apellido1'])) and

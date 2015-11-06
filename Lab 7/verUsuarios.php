@@ -1,13 +1,12 @@
-<?php 
+<?php
 	include 'credenciales.php';
 ?>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Preguntas</title>
+        <title>Usuarios Registrados</title>
         <link href='http://fonts.googleapis.com/css?family=Ubuntu+Condensed' rel='stylesheet' type='text/css'/>
         <link href="estilos/personalizado.css" rel="stylesheet" type="text/css" />
         <link rel='stylesheet' 
@@ -40,12 +39,7 @@
                   <div align="center">
             		<!--Aqui metemos el PHP para que se haga la conexion con la BD-->
                     <?php
-						/////// INFO SERVIDOR ///////
-						$servidor 	= "mysql.hostinger.es";
-						$usuario 	= "u837753965_root";	//Olatz: u432294351_root; Jose: u837753965_root; Nombre de usuario para acceder a la BD.
-						$password 	= "soyelroot";	//Password de la BD en Hostinger
-						$nombre_bd 	= "u837753965_quiz";	//Olatz: u432294351_quiz; Jose: u837753965_quiz; Nuestra base de datos se llama "quiz".
-                        
+						
                         // Crear la conexion
                         $conexion = new mysqli($servidor, $usuario_servidor, $password_servidor, $nombre_bd);
                         

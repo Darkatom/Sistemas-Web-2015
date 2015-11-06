@@ -20,34 +20,19 @@
           	</div>
           	<div class="page">
             	<div class="left-column">
-              		<div class="dark-panel">
-                		<div class="dark-panel-center">
-							<form action="login.php" method="post" name="login">
-							    <h1>Login</h1>
-								<ul>
-									<li class="username">
-										<input name = "email" type = "text" class = "login-input" />
-									</li>
-									<li class="password">
-										<input name = "password" type = "password" class = "login-input" />
-									</li>
-								</ul>
-                    			<input type = "submit" value = "Entrar" name = "Entrar"/>
-                  			</form>
-                		</div>
-                    	<p>¿Aún no tienes cuenta? <a href="registro.html">Regístrate</a>.</p>
-                		<div class="dark-panel-bottom"></div>
-              		</div>
-                    <div class="dark-panel">
+            	  <div class="dark-panel">
                     <div class="dark-panel-center">
                         <ul>
                             <li>
                                 <h1>Menú</h1>
                             </li>
                             <li class="date"><a href="layout.html">Inicio</a></li>
-                            <li class="date"><a href="quiz.php">Preguntas</a></li>
+                            <li class="date"><a href="quizes">Preguntas</a></li>
                             <li class="date"><a href="creditos.html">Créditos</a></li>
                         </ul>
+                        <p>&nbsp;</p>
+                        <p class="date"><a href="logout.php">Logout</a></p>
+                        <!--Con javascript se puede ocultar con la variable none.-->
                     </div>
                 	<div class="dark-panel-bottom"></div>
               	</div>
@@ -57,13 +42,28 @@
 				<div class="right-column-content">
                 	<div class="right-column-content-heading">
                   		<h1>&nbsp;</h1>
-                        <h1>Quiz</h1>
+                        <h1>Insertar Pregunta</h1>
                         <h2>&nbsp; </h2>
-                        <h2>Aquí se visualizan las preguntas y los créditos... </h2>
+                        <h2>Utilice el siguiente formulario para publicar una pregunta en nuestro sistema.</h2>
                 	</div>
                 	<div class="right-column-content-content">
-                  		<p>Posible cuadro de texto auxiliar.</p>
-                  		<div class="button"><a href="#" >Null</a></div>
+                  		<form id='insertarPregunta' name='registro' action="insertarPregunta.php" method="post" enctype="multipart/form-data" > 
+						Pregunta (*)<br/>
+						<input type="text" name="pregunta" onBlur = "checkPregunta()">
+						<br/><br/>
+                        
+                        Respuesta (*)<br/>
+				    		<input type="text" name="respuesta" onBlur = "checkRespuesta()">
+						<br/><br/>
+						
+						Complejidad (*)<br/>
+                        <input type="range" name="complejidad" min="1" max="5" value="1" oninput="document.getElementById('valor').textContent=value">
+                        <output id="valor">1</output>
+                        <br/><br/>
+                        
+                        <input type="submit" value="Enviar pregunta" name="enviarPregunta" >
+
+					</form>
                 	</div>
               	</div>
 			</div>

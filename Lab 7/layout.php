@@ -1,3 +1,9 @@
+<?php
+	include 'usuarios.php';
+	session_start();
+
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -12,7 +18,6 @@
        	href='estilos/smartphone.css' />
     </head>
     
-    
     <body>
         <div class="wrapper">
         	<div class="logo-menu-container">
@@ -22,20 +27,18 @@
             	<div class="left-column">
               		<div class="dark-panel">
                 		<div class="dark-panel-center">
-							<form action="login.php" method="post" name="login">
-							    <h1>Login</h1>
-								<ul>
-									<li class="username">
-										<input name = "email" type = "text" class = "login-input" />
-									</li>
-									<li class="password">
-										<input name = "password" type = "password" class = "login-input" />
-									</li>
-								</ul>
-                    			<input type = "submit" value = "Entrar" name = "Entrar"/>
-                  			</form>
+                            <?php
+                                $email = $_SESSION["email"];
+                                if (!empty($email)) {
+                                    echo '<p><a onClick="logout()">Log Out</a>.</p>';
+                                } else {
+                                    echo '<p>Hola, usuario anónimo</p>';
+                                    echo notLogged();
+                                }
+                                echo '<p>¿Aún no tienes cuenta? <a href="registro.html">Regístrate</a>.</p>';
+                            ?>
                 		</div>
-                    	<p>¿Aún no tienes cuenta? <a href="registro.html">Regístrate</a>.</p>
+                    	
                 		<div class="dark-panel-bottom"></div>
               		</div>
                     <div class="dark-panel">
@@ -44,7 +47,7 @@
                             <li>
                                 <h1>Menú</h1>
                             </li>
-                            <li class="date"><a href="layout.html">Inicio</a></li>
+                            <li class="date"><a href="layout.php">Inicio</a></li>
                             <li class="date"><a href="quiz.php">Preguntas</a></li>
                             <li class="date"><a href="creditos.html">Créditos</a></li>
                         </ul>
@@ -60,6 +63,8 @@
                         <h1>Quiz</h1>
                         <h2>&nbsp; </h2>
                         <h2>Aquí se visualizan las preguntas y los créditos... </h2>
+                        <p>&nbsp;</p>
+                        <p>NOTA: ESTAMOS PROBANDO PARA OCULTAR EL FORM SI HAY UNA SESSION ACTIVA, Y QUE APAREZCA LOGOUT EN SU DEFECTO.</p>
                 	</div>
                 	<div class="right-column-content-content">
                   		<p>Posible cuadro de texto auxiliar.</p>

@@ -1,43 +1,33 @@
 <?php
-	/////// INFO SERVIDOR ///////
-	$servidor 	= "mysql.hostinger.es";
-	$usuario 	= "u432294351_root";	//Nombre de usuario para acceder a la BD (UserID_root).
-	$password 	= "soyelroot";			//Password de la BD en Hostinger
-	$nombre_bd 	= "u432294351_quiz";	//Nuestra base de datos se llama "quiz" (UserID_quiz).
-	/////////////////////////////
+	session_start(); //Creamos una session
+	include_once "conexion.php"; //Con esto podemos tener nuestros datos de la BD en un archivo separado.
 
-	/*////////// UserID //////////
-	Olatz	=	u432294351_;		//
-	José	=	u837753965_;		//
-	////////////////////////////*/
-
-	
-	////////// CONSULTAR LA BASE DE DATOS //////////			
-	// Abrir la conexion
-	$conexion = new mysqli($servidor, $usuario, $password, $nombre_bd);
-	
-	// Comprobar la conexion
-	if ($conexion->connect_error) {
-		die("La conexion ha fallado: " . $conexion->connect_error);
-	}
-	
-	// $_POST['email']
-	// $_POST['password']
-	
-	//INSERT INTO `u837753965_quiz`.`usuario` (`Email`, `Nombre`, `Apellido1`, `Apellido2`, `Password`, `Teléfono`, `Especialidad`, `Intereses`, `Foto`) VALUES ('nuevouser001 2ikasle.ehu.es', 'Nuevo', 'Test', 'Prubas', '123456', '123456789', 'Software', NULL, 
-	//VALUES (email, nombre, apellido1, apellido2, pass, telefono, especialidad, intereses, fileToUpload)";
-	$sql = "SELECT ".$nombre_bd." email, password FROM usuario WHERE email = ".$_POST['email']." and password = ".$_POST['password'];
-		
-	if ($conexion->query($sql) === TRUE) {
-		$conexion->close();
-		header('Location: insertarPregunta.php');
-	} else {
-		$conexion->close();
-		header('Location: ' . $_SERVER['HTTP_REFERER']);
+	/*Condición: Si el usuario y la contraseña se corresponden, se acepta. Probablemente inseguro*/
+	$sql = "SELECT Password FROM usuario WHERE Email = '" . $_POST['email'] . "' and Password = '" . $_POST['password'] . "'";	
+	$rec = mysql_query($sql);
+	$count = 0;
+	while($row = mysql_fetch_object($rec))
+	{
+		$count++;
+		$result = $row;
 	}
 
-	/////////////
+	//Aqui metemos el comando para anadir los datos a la tabla de conexion:
+	$sql_conexion = "INSERT INTO u837753965_quiz.conexion (id, email, hora)
+	VALUES (DEFAULT, '{$_POST['email']}', DEFAULT)";
+	//Los DEFAULT sirven para que sea la base de datos la que meta el valor. En este caso AI y TIMESTAMP.
+	mysql_query($sql_conexion);
 
 
-?> 
-            
+	if($count == 1) //Si el boton fue presionado llamamos a la función verificar_login() dentro de otra condición preguntando si resulta verdadero y le pasamos los valores ingresados como parámetros.
+	{
+		/*Si el login fue correcto, registramos la variable de sesión y al mismo tiempo refrescamos la pagina index.php.*/
+		$_SESSION["email"] = $_POST['email'];
+		header("location:insertarPregunta.html");
+	}
+	else
+	{
+		echo '<div class="error">Su usuario es incorrecto, intente nuevamente.</div>'; //Si la función verificar_login() no pasa, que se muestre un mensaje de error.
+	}
+
+?>
