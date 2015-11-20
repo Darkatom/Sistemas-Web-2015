@@ -3,6 +3,8 @@
 	include 'usuarios.php';
 	
 	session_start(); //Creamos una session
+	
+	$dir_ip = get_client_ip();
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -19,133 +21,81 @@
        	href='estilos/smartphone.css' />
     
 		<script>
-			function abrirFormEditarPregunta( id ) {
-							
-				var table = document.getElementById(id + "_table");
-				
-				var pregunta = table.rows[1].cells[0].innerHTML;
-				var respuesta = table.rows[1].cells[1].innerHTML;
-				var tema = table.rows[1].cells[2].innerHTML;
-				var complejidad = table.rows[1].cells[3].innerHTML;
-							
-				var div = document.getElementById(id + "_div");
-				var form = document.createElement('FORM');
-				form.id = id + "_form";
-				form.name = 'editar';
-				form.method = 'POST';
-				form.action = 'editarPregunta()';
+			var xmlhttp = new XMLHttpRequest();
 
-				var text = document.createTextNode("Pregunta (*)");
-				form.appendChild(text);
+			function seleccionarPregunta( email, dir_ip, id_pregunta ) {
+				alert("Seleccionada");
+				document.getElementById(id_pregunta + "_pregunta").disabled = false;
+				document.getElementById(id_pregunta + "_respuesta").disabled = false;
+				document.getElementById(id_pregunta + "_tema").disabled = false;
+				document.getElementById(id_pregunta + "_complejidad").disabled = false;
 				
-				var br = document.createElement("br");
-				form.appendChild(br);
-				
-				var input = document.createElement('INPUT');
-				input.type = 'text';
-				input.name = 'pregunta';
-				input.onBlur = 'checkPregunta()';
-				input.value = pregunta;
-				form.appendChild(input);
-				
-				form.appendChild(br);
-				form.appendChild(br);
-			
-				text = document.createTextNode("Respuesta (*)");
-				form.appendChild(text);
-				form.appendChild(br);
-				
-				input = document.createElement('INPUT');
-				input.type = 'text';
-				input.name = 'respuesta';
-				input.onBlur = 'checkRespuesta()';
-				input.value = respuesta;
-				form.appendChild(input);
-				
-				form.appendChild(br);
-				form.appendChild(br);
-			
-				text = document.createTextNode("Tema (*)");
-				form.appendChild(text);
-				form.appendChild(br);
-				
-				input = document.createElement('INPUT');
-				input.type = 'text';
-				input.name = 'tema';
-				input.onBlur = 'checkTema()';
-				input.value = tema;
-				form.appendChild(input);
-				
-				form.appendChild(br);
-				form.appendChild(br);
-			
-				text = document.createTextNode("Complejidad (*)");
-				form.appendChild(text);
-				form.appendChild(br);
-				
-				input = document.createElement('INPUT');
-				input.type = 'range';
-				input.name = 'complejidad';
-				input.oninput = "document.getElementById('valor').textContent=value";
-				input.value = complejidad;
-				form.appendChild(input);
-								
-				var output = document.createElement('OUTPUT');
-				output.id = 'editar' + id;
-				form.appendChild(output);
-				
-				form.appendChild(br);
-				form.appendChild(br);
-				
-				input = document.createElement('INPUT');
-				input.type = 'button';
-				input.value = "Editar pregunta";
-				input.name = 'editarPreguntaButton';
-				input.onClick = "editarPregunta(" + id + ")";
-				form.appendChild(input);	
-
-				div.appendChild(form);
+				document.getElementById(id_pregunta + "_button").value = "Enviar";
+				document.getElementById(id_pregunta + "_button").setAttribute("onClick", "editarPregunta("+email+","+dir_ip+","+id_pregunta+");");
 			}
 
-			function editarPregunta( id ) {							
-				var form = document.getElementById(id + "_form");
+			function editarPregunta( email, dir_ip, id_pregunta ) {						
+				var pregunta = document.getElementById(id_pregunta + "_pregunta").value; 
+				var respuesta = document.getElementById(id_pregunta + "_respuesta").value; 
+				var tema = document.getElementById(id_pregunta + "_tema").value; 
+				var complejidad = document.getElementById(id_pregunta + "_complejidad").value;
 				
-				var pregunta = form.pregunta;
-				var respuesta = form.respuesta;
-				var tema = form.tema;
-				var complejidad = form.complejidad;
 				
-				// AJAX - Editar pregunta
+				if (window.XMLHttpRequest) {
+					// code for IE7+, Firefox, Chrome, Opera, Safari
+					xmlhttp = new XMLHttpRequest();
+				} else {
+					// code for IE6, IE5
+					xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+				}
+									
+				xmlhttp.onreadystatechange = function() {
+					if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+						document.getElementById(id_pregunta + "_pregunta").disabled = true;
+						document.getElementById(id_pregunta + "_respuesta").disabled = true;
+						document.getElementById(id_pregunta + "_tema").disabled = true;
+						document.getElementById(id_pregunta + "_complejidad").disabled = true;
+						
+						document.getElementById(id_pregunta + "_button").value = "&#9998";
+						document.getElementById(id_pregunta + "_button").setAttribute("onClick", "seleccionarPregunta("+email+","+dir_ip+","+id_pregunta+");");
+						
+					}
+				}
+				//FALLA!!!!!!!!
+				xmlhttp.open("GET","preguntas.php?funcion=editarPregunta&ip=" + dir_ip + "&email=" + email + 
+													"&id_pregunta=" + id_pregunta +
+													"&pregunta=" + pregunta + "&respuesta=" + respuesta + 
+													"&tema=" + tema + "&complejidad=" + complejidad, true);
 				
-				var table = document.getElementById(id + "_table");
-				
-				table.rows[1].cells[0].innerHTML = pregunta;
-				table.rows[1].cells[1].innerHTML = respuesta;
-				table.rows[1].cells[2].innerHTML = tema;
-				table.rows[1].cells[3].innerHTML = complejidad;
-				
+				alert("Editando");	
+				xmlhttp.send();					
 			}
 			
-			function insertarPregunta( form ) {							
+			function insertarPregunta( email, dir_ip, form ) {							
 				//Permite al usuario introducir una pregunta sin salir de la página actual.
 				var pregunta = form.pregunta;
 				var respuesta = form.respuesta;
 				var tema = form.tema;
 				var complejidad = form.complejidad;
-				alert("hola");
+				
 				// AJAX - Añadir pregunta
 				
-				var table = document.getElementById(id + "_table");
-				
-				// AJAX - Insertar tabla con nueva pregunta
-				/*
-					table.rows[1].cells[0].innerHTML = pregunta;
-					table.rows[1].cells[1].innerHTML = respuesta;
-					table.rows[1].cells[2].innerHTML = tema;
-					table.rows[1].cells[3].innerHTML = complejidad;
-				*/
+				xmlhttp.onreadystatechange = function() {
+					if (xmlhttp.readyState==4 && xmlhttp.status==200){
+						if (xmlhttp.responseText == "true") {
+							// Pregunta introducida
+						} else {
+							//
+						}
+						xmlhttp.responseText;
+					}
+				}
+								
+				xmlhttp.open("GET","preguntas.php?funcion=insertarPregunta&ip=" + dir_ip + "&email="  + email + 
+													"&pregunta=" + pregunta + "&respuesta=" + respuesta + 
+													"&tema=" + tema + "&complejidad=" + complejidad, true);
+				xmlhttp.send();
 			}
-		
 		</script>
 	
 	</head>
@@ -182,31 +132,34 @@
                         <h2>&nbsp; </h2>
                 	</div>
 					
-					<input type="button" value="Nueva pregunta" onClick="display(insertarPregunta)" align="center"/>
-					
-                	<div class="right-column-content-content" style="display:none">
-                  		<form id='insertarPregunta' name='registro' method="post" enctype="multipart/form-data" > 
-						Pregunta (*)<br/>
-						<input type="text" name="pregunta" onBlur = "checkPregunta()">
-						<br/><br/>
-                        
-                        Respuesta (*)<br/>
-				    		<input type="text" name="respuesta" onBlur = "checkRespuesta()">
-						<br/><br/>
-						
-                        Tema (*)<br/>
-				    		<input type="text" name="tema" onBlur = "checkTema()">
-						<br/><br/>
-						
-						Complejidad (*)<br/>
-                        <input type="range" name="complejidad" min="1" max="5" value="1" oninput="document.getElementById('valor').textContent=value">
-                        <output id="valor">1</output>
-                        <br/><br/>
-                        
-                        <input type="button" value="Enviar pregunta" name="insertarPregunta" onClick="insertarPregunta(this)"  >
+                	<div class="right-column-content-content">
+                  		<form id="insertarPregunta"> <!--OJO, NO ESTAMOS HACIENDO LAS COMPROBACIONES DE VALIDACIÓN-->
+							Pregunta (*)<br/>
+							<input type="text" name="pregunta"">
+							<br/><br/>
 
-						</form>
+							Respuesta (*)<br/>
+								<input type="text" name="respuesta"">
+							<br/><br/>
+
+							Tema (*)<br/>
+								<input type="text" name="tema"">
+							<br/><br/>
+
+							Complejidad (*)<br/>
+							<input type="range" name="complejidad" min="1" max="5" value="1" oninput="document.getElementById('valor').textContent=value">
+							<output id="valor">1</output>
+							<br/><br/>
+
+							<?php
+								echo '<input type="button" value="Enviar pregunta" name="insertarPregunta" onclick="insertarPregunta('.$_SESSION['email'].','.$dir_ip.', this)");/>';							
+							?>
+							</form>
+
+							<div id="answer"><b>La respuesta saldrá aquí...</b></div>
                 	</div>
+					
+					<br/><br/>
 					
 					<?php
 					
@@ -239,11 +192,11 @@
                         //Añado esto:
                         if ($num_col > 0) {
                             //Aquí dibujamos la primera fila (row) de la tabla.
-                            $div_id = 1;
+                            $count = 1;
                             
                             // Con este while pretendemos escribir el contenido de la base de datos, rellenar las proximas filas.
                             while($row = $result->fetch_assoc()) {
-                                echo "	<table id='".$div_id."_table' border=1 width='100%'>
+                                echo "<table id='".$row["id"]."_table' border=1 width='100%'>
 											<tr>
 												<th width='38%'>Pregunta</th>
 												<th width='38%'>Respuesta</th>
@@ -252,16 +205,16 @@
 												<th width='5%'></th>
 											</tr>
 											<tr>
-												<td>".$row["pregunta"]."</td>
-												<td>".$row["respuesta"]."</td>
-												<td>".$row["tema"]."</td>
-												<td>".$row["complejidad"]."</td>
-												<td><input type='button' id='".$div_id."_button' value='&#9998;' onClick='abrirFormEditarPregunta(".$div_id."); this.onClick = null;'/></td>
+												<td><input id='".$row["id"]."_pregunta' type='text' disabled value='".$row["pregunta"]."'/></td>
+												<td><input id='".$row["id"]."_respuesta' type='text' disabled value='".$row["respuesta"]."'/></td>
+												<td><input id='".$row["id"]."_tema' type='text' disabled value='".$row["tema"]."'/></td>
+												<td><input id='".$row["id"]."_complejidad' type='text' disabled value='".$row["complejidad"]."'/></td>
+												<td><input id='".$row["id"]."_button' type='button' id='".$row["id"]."_button' value='&#9998;' onClick='seleccionarPregunta(".$_SESSION['email'].", ".$dir_ip.", ".$row['id'].");'/></td>												
 											</tr>
 										</table>
-										<div id='".$div_id."_div'></div>
+										<div id='".$row["id"]."_div'></div>
 										<br/><br/>";
-								$div_id = $div_id + 1;
+								$count = $count + 1;
                             }
                         } else {
 							echo "Todavía no has insertado ninguna pregunta. ¡No pasa nada! Puedes hacerlo aquí mismo $#8593;";
@@ -274,7 +227,7 @@
 											
                         $conexion->close();
 						
-						echo "<p>Has introducido ".($div_id-1)."/".$total_preguntas." de nuestra base de datos. Congrats y eso.";	// Poner arriba modificando una etiqueta o algo
+						echo "<p>Has introducido ".($count-1)."/".$total_preguntas." de nuestra base de datos. Congrats y eso.";	// Poner arriba modificando una etiqueta o algo
 											
 						//		Editar -> Carga formulario con datos de pregunta
 						//			   -> El usuario modifica la pregunta y pulsa submit

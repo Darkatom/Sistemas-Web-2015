@@ -25,7 +25,7 @@
 	}
 	
 	function login($email, $password) {
-		if(comprobarUsuario($email,  $password);)
+		if(comprobarUsuario($email,  $password))
 		{
 			insertarConnection($email);
 			$_SESSION["email"] = $email;

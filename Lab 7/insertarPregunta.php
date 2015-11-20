@@ -1,7 +1,5 @@
 <?php
-	include 'credenciales.php';
 	include 'preguntas.php';
-	include 'usuarios.php';
 	
 	session_start(); //Creamos una session
 

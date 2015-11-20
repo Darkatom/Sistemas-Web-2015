@@ -1,7 +1,9 @@
-<?php
+﻿<?php
 	include 'credenciales.php';
 	include 'usuarios.php';
-	session_start(); //Creamos una session
+	session_start(); //Creamos una session                     
+	$email = $_POST['email'];
+	$dir_ip = get_client_ip();
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -41,21 +43,10 @@
                   <h2>&nbsp;</h2>
                   <div align="center">
             		<!--Aqui metemos el PHP para que se haga la conexion con la BD-->
-                    <?php
-					 	session_start(); //Creamos una session                     
-						$email = $_POST['email'];
-						$dir_ip = get_client_ip();
-
-                        // Crear la conexion
-                        $conexion = new mysqli($servidor, $usuario_servidor, $password_servidor, $nombre_bd);
-                        
-                        // Comprobar la conexion
-                        if ($conexion->connect_error) {
-                            die("La conexion ha fallado: " . $conexion->connect_error);
-                        }
-                    
-                        $sql = "SELECT * FROM pregunta";		//Sentencia, seleccionar todos los campos de la tabla pregunta.
-                        $result = mysqli_query($conexion, $sql);
+                    <?php    
+						insertarAccion($dir_ip, $_SESSION['email'], 2);
+						
+                        $result = makeQuery("SELECT * FROM pregunta");		//Sentencia, seleccionar todos los campos de la tabla pregunta.
                         $num_col = $result->num_rows;
                         
                         //Anado esto:
@@ -81,9 +72,7 @@
                         } else {
                             echo "La tabla está vacía. No hay entradas en la base de datos.";
                         }
-                        $conexion->close();
 						
-						insertarAccion($_SESSION['email'], $dir_ip, 2);
                     ?>
                     <!--Fuente: http://www.w3schools.com/php/php_mysql_select.asp-->
 				</div>
@@ -92,7 +81,7 @@
           </div>
         </div>
         <div class="footer-wrapper">
-          <p align="center" class="date"><a href="layout.html">Volver</a><a href="https://github.com"></a></p>
+          <p align="center" class="date"><a href="layout.php">Volver</a><a href="https://github.com"></a></p>
         </div>
 </body>
 
